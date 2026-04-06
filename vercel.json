@@ -1,5 +1,6 @@
 {
-  "buildCommand": "npm run build",
+  "installCommand": "npm install",
+  "buildCommand": "npx expo export --platform web",
   "outputDirectory": "dist",
   "env": {
     "EXPO_NO_DOTENV": "1"
