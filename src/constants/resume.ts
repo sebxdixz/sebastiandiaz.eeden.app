@@ -61,6 +61,24 @@ export const RESUME_CONTENT: Record<Lang, ResumeContent> = {
     ],
     experience: [
       {
+        company: 'agon.cl',
+        role: 'Founder & Full-Stack Developer',
+        period: '2026',
+        highlights: [
+          'Cree agon.cl como plataforma web end-to-end, definiendo arquitectura, backend, base de datos, APIs REST y frontend responsive.',
+          'Lidere la direccion de producto y UX con enfoque minimalista para entregar una experiencia clara y orientada a conversion.',
+        ],
+      },
+      {
+        company: 'Al Diente App',
+        role: 'Co-Founder & Full-Stack Developer',
+        period: '2025',
+        highlights: [
+          'Co-cree la plataforma completa de Al Diente, participando en arquitectura de sistemas, backend y frontend.',
+          'Implemente mejoras de performance y escalabilidad para soportar crecimiento sostenido de usuarios y operaciones.',
+        ],
+      },
+      {
         company: 'Grupo Axo',
         role: 'Data Scientist & Automation Analyst',
         period: 'Enero 2025 - Presente',
@@ -139,6 +157,24 @@ export const RESUME_CONTENT: Record<Lang, ResumeContent> = {
     ],
     experience: [
       {
+        company: 'agon.cl',
+        role: 'Founder & Full-Stack Developer',
+        period: '2026',
+        highlights: [
+          'Built agon.cl as an end-to-end web platform, defining architecture, backend, database, REST APIs, and responsive frontend.',
+          'Led product direction and UX execution with a minimalist approach focused on clarity and conversion.',
+        ],
+      },
+      {
+        company: 'Al Diente App',
+        role: 'Co-Founder & Full-Stack Developer',
+        period: '2025',
+        highlights: [
+          'Co-built the full Al Diente platform, owning system architecture, backend services, and frontend implementation.',
+          'Implemented performance and scalability improvements to support sustained user and operational growth.',
+        ],
+      },
+      {
         company: 'Grupo Axo',
         role: 'Data Scientist and Automation Analyst',
         period: 'January 2025 - Present',
@@ -216,6 +252,24 @@ export const RESUME_CONTENT: Record<Lang, ResumeContent> = {
       },
     ],
     experience: [
+      {
+        company: 'agon.cl',
+        role: 'Founder & Full-Stack Developer',
+        period: '2026',
+        highlights: [
+          'Entwickelte agon.cl als end-to-end Webplattform mit Architektur, Backend, Datenbank, REST APIs und responsive Frontend.',
+          'Leitete Product Direction und UX-Umsetzung mit minimalistischem Ansatz und klarem Conversion-Fokus.',
+        ],
+      },
+      {
+        company: 'Al Diente App',
+        role: 'Co-Founder & Full-Stack Developer',
+        period: '2025',
+        highlights: [
+          'Co-entwickelte die komplette Al Diente Plattform und verantwortete Systemarchitektur, Backend-Services und Frontend-Implementierung.',
+          'Implementierte Performance- und Skalierbarkeitsverbesserungen fuer nachhaltiges Nutzer- und Operations-Wachstum.',
+        ],
+      },
       {
         company: 'Grupo Axo',
         role: 'Data Scientist & Automation Analyst',
