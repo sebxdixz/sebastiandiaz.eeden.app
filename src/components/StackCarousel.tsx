@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   View,
   StyleSheet,
-  Dimensions,
+  useWindowDimensions,
   TouchableOpacity,
   Text,
   Platform
@@ -11,7 +11,6 @@ import ProjectCard from './ProjectCard';
 import { PROJECTS } from '../constants/projects';
 import { TRANSLATIONS, Lang } from '../constants/translations';
 
-const { width } = Dimensions.get('window');
 const FONT_FAMILY = Platform.select({
   ios: 'System',
   android: 'Roboto',
@@ -24,6 +23,8 @@ interface StackCarouselProps {
 
 export default function StackCarousel({ lang = 'es' }: StackCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const { width } = useWindowDimensions();
+  const isCompact = width < 760;
   const t = TRANSLATIONS[lang];
 
   const handlePrev = () => {
@@ -48,22 +49,23 @@ export default function StackCarousel({ lang = 'es' }: StackCarouselProps) {
         />
       </View>
 
-      <View style={styles.controls}>
+      <View style={[styles.controls, isCompact && styles.controlsCompact]}>
         <TouchableOpacity
-          style={[styles.button, !activeIndex && styles.buttonDisabled]}
+          style={[styles.button, isCompact && styles.buttonCompact, !activeIndex && styles.buttonDisabled]}
           onPress={handlePrev}
           disabled={activeIndex === 0}
         >
           <Text style={styles.buttonText}>{t.previous}</Text>
         </TouchableOpacity>
 
-        <Text style={styles.indicatorText}>
+        <Text style={[styles.indicatorText, isCompact && styles.indicatorCompact]}>
           {activeIndex + 1} / {PROJECTS.length}
         </Text>
 
         <TouchableOpacity
           style={[
             styles.button,
+            isCompact && styles.buttonCompact,
             activeIndex === PROJECTS.length - 1 && styles.buttonDisabled
           ]}
           onPress={handleNext}
@@ -91,27 +93,37 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    paddingBottom: 40
+    paddingBottom: 22
   },
   cardContainer: {
     alignItems: 'center',
-    marginBottom: 30
+    marginBottom: 18,
+    width: '100%'
   },
   controls: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
-    paddingHorizontal: 20,
-    marginBottom: 20
+    paddingHorizontal: 12,
+    marginBottom: 16,
+    gap: 10
+  },
+  controlsCompact: {
+    flexWrap: 'wrap',
+    justifyContent: 'center'
   },
   button: {
     paddingHorizontal: 16,
     paddingVertical: 10,
-    borderWidth: 2,
+    borderWidth: 1.5,
     borderColor: '#000000',
-    borderRadius: 6,
+    borderRadius: 0,
     backgroundColor: '#FFFFFF'
+  },
+  buttonCompact: {
+    minWidth: 120,
+    alignItems: 'center'
   },
   buttonDisabled: {
     opacity: 0.3
@@ -125,8 +137,13 @@ const styles = StyleSheet.create({
   indicatorText: {
     fontFamily: FONT_FAMILY,
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: '700',
     color: '#000000'
+  },
+  indicatorCompact: {
+    width: '100%',
+    textAlign: 'center',
+    marginVertical: 4
   },
   dots: {
     flexDirection: 'row',

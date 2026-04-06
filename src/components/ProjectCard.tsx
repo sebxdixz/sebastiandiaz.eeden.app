@@ -3,15 +3,13 @@ import {
   View,
   Text,
   StyleSheet,
-  Dimensions,
   TouchableOpacity,
   Linking,
-  Platform
+  Platform,
+  useWindowDimensions
 } from 'react-native';
 import { Project } from '../constants/projects';
 
-const { width } = Dimensions.get('window');
-const CARD_WIDTH = width * 0.9;
 const FONT_FAMILY = Platform.select({
   ios: 'System',
   android: 'Roboto',
@@ -25,6 +23,9 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({ project }: ProjectCardProps) {
+  const { width } = useWindowDimensions();
+  const cardWidth = Math.min(Math.max(width - 70, 280), 980);
+
   const isAIAgent = project.techs.some((tech) =>
     tech.toLowerCase().includes('ai') ||
     tech.toLowerCase().includes('agent') ||
@@ -43,7 +44,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   };
 
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, { width: cardWidth }]}>
       <View style={styles.overlay}>
         <View style={styles.content}>
           <View style={styles.headerRow}>
@@ -83,17 +84,16 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
 const styles = StyleSheet.create({
   card: {
-    width: CARD_WIDTH,
-    height: 500,
+    height: 520,
     backgroundColor: '#000000',
-    borderRadius: 12,
+    borderRadius: 0,
     overflow: 'hidden',
-    borderWidth: 2,
+    borderWidth: 1.5,
     borderColor: '#000000'
   },
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'flex-end',
     paddingHorizontal: 24,
     paddingVertical: 32
@@ -110,8 +110,8 @@ const styles = StyleSheet.create({
   },
   projectName: {
     fontFamily: FONT_FAMILY,
-    fontSize: 28,
-    fontWeight: '700',
+    fontSize: 34,
+    fontWeight: '900',
     color: '#FFFFFF',
     flex: 1
   },
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#FFFFFF',
     marginBottom: 24,
-    lineHeight: 20
+    lineHeight: 22
   },
   techStack: {
     flexDirection: 'row',
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     paddingVertical: 12,
     paddingHorizontal: 24,
-    borderRadius: 6,
+    borderRadius: 0,
     alignItems: 'center'
   },
   ctaText: {

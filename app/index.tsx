@@ -38,7 +38,7 @@ const PAGE_MIN_HEIGHT = Platform.OS === 'web' ? ('100vh' as any) : ('100%' as an
 function Bullet({ text }: { text: string }) {
   return (
     <View style={styles.bulletRow}>
-      <View style={styles.bulletDot} />
+      <Text style={styles.bulletMark}>+</Text>
       <Text style={styles.bulletText}>{text}</Text>
     </View>
   );
@@ -72,36 +72,25 @@ export default function HomeScreen() {
           ))}
         </View>
 
-        <View style={styles.heroCard}>
-          <View style={styles.heroGlowA} />
-          <View style={styles.heroGlowB} />
-
-          <View style={styles.identityWrap}>
-            <View style={styles.avatar}>
-              <Text style={styles.avatarText}>SD</Text>
-            </View>
-            <View style={styles.identityText}>
-              <Text style={styles.name}>Sebastian Diaz</Text>
-              <Text style={styles.role}>{t.role}</Text>
-            </View>
-          </View>
-
+        <View style={styles.hero}>
+          <Text style={styles.kicker}>AI AGENT ENGINEER · SANTIAGO</Text>
+          <Text style={styles.name}>Sebastian Diaz</Text>
+          <Text style={styles.role}>{t.role}</Text>
           <Text style={styles.bio}>{t.bio}</Text>
 
-          <Text style={styles.subTitle}>{t.coreSkills}</Text>
+          <View style={styles.metaGrid}>
+            <Text style={styles.metaText}>{PROFILE_META.location}</Text>
+            <Text style={styles.metaText}>{PROFILE_META.phone}</Text>
+            <Text style={styles.metaText}>{PROFILE_META.email}</Text>
+            <Text style={styles.metaText}>{PROFILE_META.academicEmail}</Text>
+          </View>
+
           <View style={styles.skillsRow}>
             {CORE_SKILLS.map((skill) => (
               <View key={skill} style={styles.skillChip}>
                 <Text style={styles.skillChipText}>{skill}</Text>
               </View>
             ))}
-          </View>
-
-          <View style={styles.contactGrid}>
-            <Text style={styles.contactText}>{PROFILE_META.location}</Text>
-            <Text style={styles.contactText}>{PROFILE_META.phone}</Text>
-            <Text style={styles.contactText}>{PROFILE_META.email}</Text>
-            <Text style={styles.contactText}>{PROFILE_META.academicEmail}</Text>
           </View>
 
           <View style={styles.socialRow}>
@@ -123,33 +112,30 @@ export default function HomeScreen() {
           </View>
         </View>
 
+        <View style={styles.separator} />
+
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t.education}</Text>
-          {EDUCATION.map((item) => (
-            <View key={item.institution} style={styles.resumeCard}>
-              <View style={styles.resumeHeader}>
-                <View style={styles.resumeHeaderMain}>
-                  <Text style={styles.resumeTitle}>{item.institution}</Text>
-                  <Text style={styles.resumeSubtitle}>{item.degree}</Text>
-                  <Text style={styles.resumeSubtitle}>{item.title}</Text>
-                </View>
-                <Text style={styles.resumePeriod}>{item.period}</Text>
-              </View>
-              <View style={styles.bulletList}>
-                {item.highlights.map((highlight) => (
-                  <Bullet key={highlight} text={highlight} />
-                ))}
-              </View>
-            </View>
-          ))}
+          <Text style={styles.sectionTitle}>{t.featuredProjects}</Text>
+          <View style={styles.carouselFrame}>
+            <StackCarousel lang={lang} />
+          </View>
         </View>
+
+        <View style={styles.separator} />
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Selected Work</Text>
+          <ProjectsGrid projects={PROJECTS} />
+        </View>
+
+        <View style={styles.separator} />
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t.workExperience}</Text>
           {EXPERIENCE.map((item) => (
-            <View key={`${item.company}-${item.role}`} style={styles.resumeCard}>
-              <View style={styles.resumeHeader}>
-                <View style={styles.resumeHeaderMain}>
+            <View key={`${item.company}-${item.role}`} style={styles.resumeBlock}>
+              <View style={styles.resumeHead}>
+                <View style={styles.resumeHeadMain}>
                   <Text style={styles.resumeTitle}>{item.role}</Text>
                   <Text style={styles.resumeSubtitle}>{item.company}</Text>
                   {item.location ? (
@@ -167,9 +153,34 @@ export default function HomeScreen() {
           ))}
         </View>
 
+        <View style={styles.separator} />
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t.education}</Text>
+          {EDUCATION.map((item) => (
+            <View key={item.institution} style={styles.resumeBlock}>
+              <View style={styles.resumeHead}>
+                <View style={styles.resumeHeadMain}>
+                  <Text style={styles.resumeTitle}>{item.institution}</Text>
+                  <Text style={styles.resumeSubtitle}>{item.degree}</Text>
+                  <Text style={styles.resumeSubtitle}>{item.title}</Text>
+                </View>
+                <Text style={styles.resumePeriod}>{item.period}</Text>
+              </View>
+              <View style={styles.bulletList}>
+                {item.highlights.map((highlight) => (
+                  <Bullet key={highlight} text={highlight} />
+                ))}
+              </View>
+            </View>
+          ))}
+        </View>
+
+        <View style={styles.separator} />
+
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t.certifications}</Text>
-          <View style={styles.resumeCard}>
+          <View style={styles.resumeBlock}>
             {CERTIFICATIONS.map((cert, index) => (
               <View
                 key={`${cert.provider}-${cert.name}`}
@@ -185,26 +196,11 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t.featuredProjects}</Text>
-          <View style={styles.surface}>
-            <View style={styles.carouselSection}>
-              <StackCarousel lang={lang} />
-            </View>
-          </View>
-        </View>
-
-        <View style={styles.section}>
-          <View style={styles.surface}>
-            <ProjectsGrid projects={PROJECTS} />
-          </View>
-        </View>
+        <View style={styles.separator} />
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t.theLab}</Text>
-          <View style={styles.surface}>
-            <LabSection />
-          </View>
+          <LabSection />
         </View>
 
         <View style={styles.footer}>
@@ -212,11 +208,11 @@ export default function HomeScreen() {
             <TouchableOpacity onPress={() => openLink(SOCIAL_LINKS.linkedin)}>
               <Text style={styles.footerLink}>LinkedIn</Text>
             </TouchableOpacity>
-            <Text style={styles.footerDot}> | </Text>
+            <Text style={styles.footerDot}> / </Text>
             <TouchableOpacity onPress={() => openLink(SOCIAL_LINKS.github)}>
               <Text style={styles.footerLink}>GitHub</Text>
             </TouchableOpacity>
-            <Text style={styles.footerDot}> | </Text>
+            <Text style={styles.footerDot}> / </Text>
             <TouchableOpacity onPress={openEmail}>
               <Text style={styles.footerLink}>{SOCIAL_LINKS.email}</Text>
             </TouchableOpacity>
@@ -232,273 +228,231 @@ const styles = StyleSheet.create({
   page: {
     flex: 1,
     width: '100%',
-    backgroundColor: '#EEF2FF',
+    backgroundColor: '#F6F6F4',
   },
   pageContent: {
     minHeight: PAGE_MIN_HEIGHT,
-    paddingVertical: 20,
   },
   canvas: {
     width: '100%',
-    maxWidth: 1120,
+    maxWidth: 1240,
     alignSelf: 'center',
-    paddingHorizontal: 16,
-    paddingBottom: 40,
+    paddingHorizontal: 20,
+    paddingBottom: 48,
   },
   langBar: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    marginBottom: 12,
+    marginTop: 18,
+    marginBottom: 26,
     gap: 8,
   },
   langButton: {
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderWidth: 1,
-    borderColor: '#CBD5E1',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 999,
+    borderColor: '#0F0F0F',
+    borderRadius: 0,
+    backgroundColor: '#F6F6F4',
   },
   langButtonActive: {
-    backgroundColor: '#0F172A',
-    borderColor: '#0F172A',
+    backgroundColor: '#0F0F0F',
   },
   langText: {
     fontFamily: FONT_FAMILY,
     fontSize: 12,
     fontWeight: '700',
-    color: '#0F172A',
+    color: '#0F0F0F',
+    letterSpacing: 1,
   },
   langTextActive: {
-    color: '#F8FAFC',
+    color: '#F6F6F4',
   },
-  heroCard: {
-    position: 'relative',
-    overflow: 'hidden',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 28,
-    padding: 24,
-    borderWidth: 1,
-    borderColor: '#D8E1F0',
-    shadowColor: '#1E293B',
-    shadowOpacity: 0.08,
-    shadowRadius: 20,
-    shadowOffset: { width: 0, height: 8 },
-    elevation: 3,
+  hero: {
+    paddingBottom: 26,
   },
-  heroGlowA: {
-    position: 'absolute',
-    width: 220,
-    height: 220,
-    borderRadius: 110,
-    backgroundColor: '#DBEAFE',
-    top: -80,
-    right: -40,
-  },
-  heroGlowB: {
-    position: 'absolute',
-    width: 160,
-    height: 160,
-    borderRadius: 80,
-    backgroundColor: '#EDE9FE',
-    bottom: -60,
-    left: -50,
-  },
-  identityWrap: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 16,
-    flexWrap: 'wrap',
-  },
-  avatar: {
-    width: 72,
-    height: 72,
-    borderRadius: 36,
-    backgroundColor: '#0F172A',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  avatarText: {
+  kicker: {
     fontFamily: FONT_FAMILY,
-    fontSize: 24,
-    fontWeight: '900',
-    color: '#F8FAFC',
-  },
-  identityText: {
-    flex: 1,
-    minWidth: 220,
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#4B4B4B',
+    letterSpacing: 1.5,
+    marginBottom: 12,
   },
   name: {
     fontFamily: FONT_FAMILY,
-    fontSize: 44,
+    fontSize: 72,
+    lineHeight: 72,
     fontWeight: '900',
-    color: '#0F172A',
+    color: '#0F0F0F',
   },
   role: {
     fontFamily: FONT_FAMILY,
-    fontSize: 18,
+    fontSize: 24,
     fontWeight: '700',
-    color: '#334155',
-    marginTop: 4,
+    color: '#1B1B1B',
+    marginTop: 8,
   },
   bio: {
-    marginTop: 18,
+    marginTop: 16,
+    maxWidth: 900,
     fontFamily: FONT_FAMILY,
-    fontSize: 16,
-    color: '#334155',
-    lineHeight: 26,
-    maxWidth: 940,
+    fontSize: 17,
+    lineHeight: 28,
+    color: '#2C2C2C',
   },
-  subTitle: {
-    marginTop: 22,
+  metaGrid: {
+    marginTop: 18,
+    gap: 4,
+  },
+  metaText: {
     fontFamily: FONT_FAMILY,
-    fontSize: 15,
-    fontWeight: '800',
-    color: '#0F172A',
+    fontSize: 13,
+    fontWeight: '500',
+    color: '#3A3A3A',
   },
   skillsRow: {
-    marginTop: 12,
+    marginTop: 18,
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 8,
   },
   skillChip: {
     borderWidth: 1,
-    borderColor: '#D5E1F3',
-    backgroundColor: '#F1F5F9',
-    borderRadius: 999,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
+    borderColor: '#0F0F0F',
+    borderRadius: 0,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    backgroundColor: '#F6F6F4',
   },
   skillChipText: {
     fontFamily: FONT_FAMILY,
     fontSize: 12,
     fontWeight: '600',
-    color: '#334155',
-  },
-  contactGrid: {
-    marginTop: 16,
-    gap: 4,
-  },
-  contactText: {
-    fontFamily: FONT_FAMILY,
-    fontSize: 13,
-    color: '#475569',
-    fontWeight: '500',
+    color: '#0F0F0F',
   },
   socialRow: {
-    marginTop: 20,
+    marginTop: 24,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 12,
+    gap: 10,
   },
   socialButton: {
-    paddingHorizontal: 18,
-    paddingVertical: 10,
     borderWidth: 1,
-    borderColor: '#CBD5E1',
-    borderRadius: 10,
-    backgroundColor: '#FFFFFF',
+    borderColor: '#0F0F0F',
+    borderRadius: 0,
+    paddingHorizontal: 16,
+    paddingVertical: 9,
+    backgroundColor: '#F6F6F4',
   },
   socialButtonPrimary: {
-    backgroundColor: '#0F172A',
-    borderColor: '#0F172A',
+    backgroundColor: '#0F0F0F',
   },
   socialText: {
     fontFamily: FONT_FAMILY,
     fontSize: 12,
     fontWeight: '700',
-    color: '#0F172A',
+    letterSpacing: 0.6,
+    color: '#0F0F0F',
   },
   socialTextPrimary: {
-    color: '#F8FAFC',
+    color: '#F6F6F4',
+  },
+  separator: {
+    height: 1,
+    backgroundColor: '#1A1A1A',
   },
   section: {
-    marginTop: 24,
+    paddingVertical: 22,
   },
   sectionTitle: {
     fontFamily: FONT_FAMILY,
-    fontSize: 30,
-    fontWeight: '800',
-    color: '#0F172A',
-    marginBottom: 14,
+    fontSize: 34,
+    fontWeight: '900',
+    letterSpacing: -0.8,
+    color: '#0F0F0F',
+    marginBottom: 16,
   },
-  resumeCard: {
+  carouselFrame: {
+    borderWidth: 1.5,
+    borderColor: '#0F0F0F',
     backgroundColor: '#FFFFFF',
+    paddingVertical: 10,
+  },
+  resumeBlock: {
     borderWidth: 1,
-    borderColor: '#D8E1F0',
-    borderRadius: 18,
-    padding: 20,
+    borderColor: '#0F0F0F',
+    backgroundColor: '#FFFFFF',
+    padding: 18,
     marginBottom: 12,
   },
-  resumeHeader: {
+  resumeHead: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
     gap: 12,
     flexWrap: 'wrap',
   },
-  resumeHeaderMain: {
+  resumeHeadMain: {
     flex: 1,
     minWidth: 240,
   },
   resumeTitle: {
     fontFamily: FONT_FAMILY,
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: '800',
-    color: '#0F172A',
-    marginBottom: 2,
+    color: '#0F0F0F',
   },
   resumeSubtitle: {
     fontFamily: FONT_FAMILY,
     fontSize: 14,
-    fontWeight: '600',
-    color: '#475569',
-    marginTop: 2,
+    fontWeight: '500',
+    color: '#242424',
+    marginTop: 3,
   },
   resumePeriod: {
     fontFamily: FONT_FAMILY,
-    fontSize: 13,
+    fontSize: 12,
     fontWeight: '700',
-    color: '#1D4ED8',
-    backgroundColor: '#EAF2FF',
+    color: '#0F0F0F',
+    borderWidth: 1,
+    borderColor: '#0F0F0F',
     paddingHorizontal: 10,
     paddingVertical: 6,
-    borderRadius: 999,
   },
   bulletList: {
     marginTop: 14,
-    gap: 10,
+    gap: 8,
   },
   bulletRow: {
     flexDirection: 'row',
     alignItems: 'flex-start',
-    gap: 10,
+    gap: 8,
   },
-  bulletDot: {
-    width: 7,
-    height: 7,
-    borderRadius: 4,
-    backgroundColor: '#0F172A',
-    marginTop: 8,
+  bulletMark: {
+    fontFamily: FONT_FAMILY,
+    fontSize: 14,
+    fontWeight: '900',
+    color: '#0F0F0F',
+    marginTop: 1,
   },
   bulletText: {
     flex: 1,
     fontFamily: FONT_FAMILY,
     fontSize: 14,
-    color: '#334155',
     lineHeight: 22,
+    color: '#202020',
   },
   certRow: {
     flexDirection: 'row',
-    alignItems: 'flex-start',
     justifyContent: 'space-between',
-    gap: 12,
+    alignItems: 'flex-start',
+    gap: 10,
     paddingVertical: 10,
   },
   certRowBorder: {
     borderTopWidth: 1,
-    borderTopColor: '#E2E8F0',
+    borderTopColor: '#D3D3D3',
   },
   certMain: {
     flex: 1,
@@ -508,63 +462,46 @@ const styles = StyleSheet.create({
     fontFamily: FONT_FAMILY,
     fontSize: 15,
     fontWeight: '700',
-    color: '#0F172A',
+    color: '#0F0F0F',
   },
   certProvider: {
     fontFamily: FONT_FAMILY,
     fontSize: 13,
     fontWeight: '500',
-    color: '#64748B',
-    marginTop: 4,
+    color: '#3A3A3A',
+    marginTop: 3,
   },
   certPeriod: {
     fontFamily: FONT_FAMILY,
     fontSize: 12,
     fontWeight: '700',
-    color: '#1D4ED8',
-    marginTop: 2,
-  },
-  surface: {
-    backgroundColor: '#FFFFFF',
-    borderWidth: 1,
-    borderColor: '#D8E1F0',
-    borderRadius: 18,
-    padding: 14,
-  },
-  carouselSection: {
-    minHeight: 620,
-    width: '100%',
-    justifyContent: 'center',
-    paddingVertical: 20,
+    color: '#0F0F0F',
   },
   footer: {
-    marginTop: 30,
-    paddingVertical: 24,
-    borderTopWidth: 1.5,
-    borderTopColor: '#CBD5E1',
+    paddingTop: 26,
     alignItems: 'center',
   },
   footerLinks: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 12,
+    alignItems: 'center',
   },
   footerLink: {
     fontFamily: FONT_FAMILY,
     fontSize: 13,
     fontWeight: '600',
-    color: '#1E293B',
+    color: '#0F0F0F',
   },
   footerDot: {
     fontFamily: FONT_FAMILY,
     fontSize: 13,
-    color: '#64748B',
+    color: '#515151',
   },
   footerText: {
+    marginTop: 10,
     fontFamily: FONT_FAMILY,
     fontSize: 12,
-    color: '#64748B',
+    color: '#515151',
   },
 });

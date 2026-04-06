@@ -4,13 +4,11 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Dimensions,
+  useWindowDimensions,
   Platform
 } from 'react-native';
 import { Project, PROJECTS } from '../constants/projects';
 
-const { width } = Dimensions.get('window');
-const itemWidth = (width - 60) / 2;
 const FONT_FAMILY = Platform.select({
   ios: 'System',
   android: 'Roboto',
@@ -19,9 +17,10 @@ const FONT_FAMILY = Platform.select({
 
 interface ProjectGridItemProps {
   project: Project;
+  itemWidth: number;
 }
 
-function ProjectGridItem({ project }: ProjectGridItemProps) {
+function ProjectGridItem({ project, itemWidth }: ProjectGridItemProps) {
   const [isInverted, setIsInverted] = useState(false);
 
   const handlePress = () => {
@@ -31,7 +30,7 @@ function ProjectGridItem({ project }: ProjectGridItemProps) {
   return (
     <TouchableOpacity
       onPress={handlePress}
-      style={styles.gridItemContainer}
+      style={[styles.gridItemContainer, { width: itemWidth }]}
       activeOpacity={0.8}
     >
       <View
@@ -67,13 +66,17 @@ interface ProjectsGridProps {
 }
 
 export default function ProjectsGrid({ projects = [] }: ProjectsGridProps) {
+  const { width } = useWindowDimensions();
   const gridData: Project[] = projects.length > 0 ? projects : PROJECTS;
+  const columns = width < 860 ? 1 : 2;
+  const gutter = 16;
+  const itemWidth = columns === 1 ? width - 80 : Math.max((width - 80 - gutter) / 2, 280);
 
   return (
     <View style={styles.container}>
       <View style={styles.grid}>
         {gridData.map((item) => (
-          <ProjectGridItem key={item.id} project={item} />
+          <ProjectGridItem key={item.id} project={item} itemWidth={itemWidth} />
         ))}
       </View>
     </View>
@@ -87,15 +90,14 @@ const styles = StyleSheet.create({
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     gap: 16
   },
   gridItemContainer: {
-    width: itemWidth,
     height: 200,
-    borderWidth: 2,
+    borderWidth: 1.5,
     borderColor: '#000000',
-    borderRadius: 8,
+    borderRadius: 0,
     overflow: 'hidden'
   },
   gridItem: {
