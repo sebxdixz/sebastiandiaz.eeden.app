@@ -61,12 +61,13 @@ export const RESUME_CONTENT: Record<Lang, ResumeContent> = {
     ],
     experience: [
       {
-        company: 'agon.cl',
-        role: 'Founder & Full-Stack Developer',
-        period: '2026',
+        company: 'Grupo Axo',
+        role: 'Data Scientist & Automation Analyst',
+        period: 'Enero 2025 - Presente',
         highlights: [
-          'Cree agon.cl como plataforma web end-to-end, definiendo arquitectura, backend, base de datos, APIs REST y frontend responsive.',
-          'Lidere la direccion de producto y UX con enfoque minimalista para entregar una experiencia clara y orientada a conversion.',
+          'Lidero arquitectura de pipelines de datos autonomos para retail internacional, reemplazando analisis manual por decisiones automatizadas.',
+          'Desarrollo APIs RESTful asincronas en Python para exponer modelos predictivos en sistemas legacy.',
+          'Diseno orquestaciones ETL/ELT para ingesta masiva y analisis en tiempo real.',
         ],
       },
       {
@@ -79,13 +80,12 @@ export const RESUME_CONTENT: Record<Lang, ResumeContent> = {
         ],
       },
       {
-        company: 'Grupo Axo',
-        role: 'Data Scientist & Automation Analyst',
-        period: 'Enero 2025 - Presente',
+        company: 'agon.cl',
+        role: 'Co-Founder & Full-Stack Developer',
+        period: '2026',
         highlights: [
-          'Lidero arquitectura de pipelines de datos autonomos para retail internacional, reemplazando analisis manual por decisiones automatizadas.',
-          'Desarrollo APIs RESTful asincronas en Python para exponer modelos predictivos en sistemas legacy.',
-          'Diseno orquestaciones ETL/ELT para ingesta masiva y analisis en tiempo real.',
+          'Co-cree agon.cl como plataforma web end-to-end, definiendo arquitectura, backend, base de datos, APIs REST y frontend responsive.',
+          'Lidere la direccion de producto y UX con enfoque minimalista para entregar una experiencia clara y orientada a conversion.',
         ],
       },
       {
@@ -157,12 +157,13 @@ export const RESUME_CONTENT: Record<Lang, ResumeContent> = {
     ],
     experience: [
       {
-        company: 'agon.cl',
-        role: 'Founder & Full-Stack Developer',
-        period: '2026',
+        company: 'Grupo Axo',
+        role: 'Data Scientist and Automation Analyst',
+        period: 'January 2025 - Present',
         highlights: [
-          'Built agon.cl as an end-to-end web platform, defining architecture, backend, database, REST APIs, and responsive frontend.',
-          'Led product direction and UX execution with a minimalist approach focused on clarity and conversion.',
+          'Lead autonomous data pipeline architecture for international retail, replacing manual analysis with automated decision workflows.',
+          'Build asynchronous Python RESTful APIs to expose predictive models in legacy systems.',
+          'Design ETL/ELT orchestrations for large-scale ingestion and real-time analysis.',
         ],
       },
       {
@@ -175,13 +176,12 @@ export const RESUME_CONTENT: Record<Lang, ResumeContent> = {
         ],
       },
       {
-        company: 'Grupo Axo',
-        role: 'Data Scientist and Automation Analyst',
-        period: 'January 2025 - Present',
+        company: 'agon.cl',
+        role: 'Co-Founder & Full-Stack Developer',
+        period: '2026',
         highlights: [
-          'Lead autonomous data pipeline architecture for international retail, replacing manual analysis with automated decision workflows.',
-          'Build asynchronous Python RESTful APIs to expose predictive models in legacy systems.',
-          'Design ETL/ELT orchestrations for large-scale ingestion and real-time analysis.',
+          'Co-founded and built agon.cl as an end-to-end web platform, defining architecture, backend, database, REST APIs, and responsive frontend.',
+          'Led product direction and UX execution with a minimalist approach focused on clarity and conversion.',
         ],
       },
       {
@@ -253,12 +253,13 @@ export const RESUME_CONTENT: Record<Lang, ResumeContent> = {
     ],
     experience: [
       {
-        company: 'agon.cl',
-        role: 'Founder & Full-Stack Developer',
-        period: '2026',
+        company: 'Grupo Axo',
+        role: 'Data Scientist & Automation Analyst',
+        period: 'Januar 2025 - Heute',
         highlights: [
-          'Entwickelte agon.cl als end-to-end Webplattform mit Architektur, Backend, Datenbank, REST APIs und responsive Frontend.',
-          'Leitete Product Direction und UX-Umsetzung mit minimalistischem Ansatz und klarem Conversion-Fokus.',
+          'Leite die Architektur autonomer Datenpipelines fuer internationalen Retail und ersetze manuelle Analyse durch automatisierte Entscheidungsablaeufe.',
+          'Entwickle asynchrone RESTful APIs in Python zur Integration praediktiver Modelle in Legacy-Systeme.',
+          'Entwerfe komplexe ETL/ELT-Orchestrierungen fuer Massendaten und Echtzeit-Analysen.',
         ],
       },
       {
@@ -271,13 +272,12 @@ export const RESUME_CONTENT: Record<Lang, ResumeContent> = {
         ],
       },
       {
-        company: 'Grupo Axo',
-        role: 'Data Scientist & Automation Analyst',
-        period: 'Januar 2025 - Heute',
+        company: 'agon.cl',
+        role: 'Co-Founder & Full-Stack Developer',
+        period: '2026',
         highlights: [
-          'Leite die Architektur autonomer Datenpipelines fuer internationalen Retail und ersetze manuelle Analyse durch automatisierte Entscheidungsablaeufe.',
-          'Entwickle asynchrone RESTful APIs in Python zur Integration praediktiver Modelle in Legacy-Systeme.',
-          'Entwerfe komplexe ETL/ELT-Orchestrierungen fuer Massendaten und Echtzeit-Analysen.',
+          'Co-gruendete und entwickelte agon.cl als end-to-end Webplattform mit Architektur, Backend, Datenbank, REST APIs und responsive Frontend.',
+          'Leitete Product Direction und UX-Umsetzung mit minimalistischem Ansatz und klarem Conversion-Fokus.',
         ],
       },
       {
