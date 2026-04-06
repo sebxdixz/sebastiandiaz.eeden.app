@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -7,12 +7,6 @@ import {
   TouchableOpacity,
   Linking
 } from 'react-native';
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming
-} from 'react-native-reanimated';
-import { Video } from 'expo-av';
 import { Project } from '../constants/projects';
 
 const { width } = Dimensions.get('window');
@@ -24,10 +18,6 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({ project, isActive }: ProjectCardProps) {
-  const videoRef = React.useRef<Video>(null);
-  const [isMuted] = useState(true);
-  const scaleValue = useSharedValue(1);
-
   const isAIAgent = project.techs.some(tech =>
     tech.toLowerCase().includes('ai') ||
     tech.toLowerCase().includes('agent') ||
@@ -45,39 +35,8 @@ export default function ProjectCard({ project, isActive }: ProjectCardProps) {
     }
   };
 
-  React.useEffect(() => {
-    if (isActive) {
-      videoRef.current?.playAsync();
-      scaleValue.value = withTiming(1, { duration: 300 });
-    } else {
-      videoRef.current?.pauseAsync();
-      scaleValue.value = withTiming(0.95, { duration: 300 });
-    }
-  }, [isActive]);
-
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scaleValue.value }]
-  }));
-
   return (
-    <Animated.View
-      style={[styles.card, animatedStyle]}
-    >
-      {/* Video Background */}
-      {project.videoUrl && (
-        <Video
-          ref={videoRef}
-          source={{ uri: project.videoUrl }}
-          style={styles.video}
-          isLooping
-          isMuted={isMuted}
-          shouldPlay={false}
-          useNativeControls={false}
-          rate={1.0}
-          progressUpdateIntervalMillis={1000}
-        />
-      )}
-
+    <View style={styles.card}>
       {/* Overlay with content */}
       <View style={styles.overlay}>
         <View style={styles.content}>
@@ -114,7 +73,7 @@ export default function ProjectCard({ project, isActive }: ProjectCardProps) {
           )}
         </View>
       </View>
-    </Animated.View>
+    </View>
   );
 }
 
@@ -128,14 +87,9 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#000000'
   },
-  video: {
-    ...StyleSheet.absoluteFillObject,
-    width: '100%',
-    height: '100%'
-  },
   overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
     justifyContent: 'flex-end',
     paddingHorizontal: 24,
     paddingVertical: 32
