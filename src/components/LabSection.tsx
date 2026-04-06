@@ -76,18 +76,24 @@ export default function LabSection() {
       const response = await fetch(
         'https://api.github.com/users/sebxdixz/repos?sort=stars&per_page=6'
       );
+      if (!response.ok) {
+        throw new Error(`GitHub API error: ${response.status}`);
+      }
       const data = await response.json();
 
-      const formattedRepos: Repository[] = data.map(
-        (repo: any) => ({
-          id: repo.id.toString(),
-          name: repo.name,
-          description: repo.description,
-          url: repo.html_url,
-          language: repo.language || 'Unknown',
-          stars: repo.stargazers_count
-        })
-      );
+      // GitHub can return an error object (e.g. rate limit) instead of an array.
+      if (!Array.isArray(data)) {
+        throw new Error('GitHub API returned a non-array response');
+      }
+
+      const formattedRepos: Repository[] = data.map((repo: any) => ({
+        id: repo.id.toString(),
+        name: repo.name,
+        description: repo.description,
+        url: repo.html_url,
+        language: repo.language || 'Unknown',
+        stars: repo.stargazers_count
+      }));
 
       setRepos(formattedRepos);
     } catch (error) {
