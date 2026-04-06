@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Linking, Platform } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Linking,
+  Platform,
+  ScrollView,
+} from 'react-native';
 import StackCarousel from '../src/components/StackCarousel';
 import ProjectsGrid from '../src/components/ProjectsGrid';
 import LabSection from '../src/components/LabSection';
@@ -17,6 +25,7 @@ const FONT_FAMILY = Platform.select({
   android: 'Roboto',
   default: 'Roboto, Arial, sans-serif',
 });
+const PAGE_MIN_HEIGHT = Platform.OS === 'web' ? ('100vh' as any) : ('100%' as any);
 
 export default function HomeScreen() {
   const [lang, setLang] = useState<Lang>('es');
@@ -26,7 +35,11 @@ export default function HomeScreen() {
   const openEmail = () => Linking.openURL(`mailto:${SOCIAL_LINKS.email}`);
 
   return (
-    <View style={styles.page}>
+    <ScrollView
+      style={styles.page}
+      contentContainerStyle={styles.pageContent}
+      showsVerticalScrollIndicator={false}
+    >
       <View style={styles.langBar}>
         {(['es', 'en', 'de'] as Lang[]).map((l) => (
           <TouchableOpacity
@@ -104,14 +117,18 @@ export default function HomeScreen() {
         </View>
         <Text style={styles.footerText}>{t.rights}</Text>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   page: {
+    flex: 1,
+    width: '100%',
     backgroundColor: '#FFFFFF',
-    minHeight: '100%' as any,
+  },
+  pageContent: {
+    minHeight: PAGE_MIN_HEIGHT,
   },
   langBar: {
     flexDirection: 'row',
