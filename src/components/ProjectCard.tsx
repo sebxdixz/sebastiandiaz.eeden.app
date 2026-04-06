@@ -5,20 +5,27 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
-  Linking
+  Linking,
+  Platform
 } from 'react-native';
 import { Project } from '../constants/projects';
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = width * 0.9;
+const FONT_FAMILY = Platform.select({
+  ios: 'System',
+  android: 'Roboto',
+  default: 'Roboto, Arial, sans-serif',
+});
 
 interface ProjectCardProps {
   project: Project;
   isActive: boolean;
+  lang?: 'es' | 'en' | 'de';
 }
 
-export default function ProjectCard({ project, isActive }: ProjectCardProps) {
-  const isAIAgent = project.techs.some(tech =>
+export default function ProjectCard({ project }: ProjectCardProps) {
+  const isAIAgent = project.techs.some((tech) =>
     tech.toLowerCase().includes('ai') ||
     tech.toLowerCase().includes('agent') ||
     tech.toLowerCase().includes('claude')
@@ -37,20 +44,18 @@ export default function ProjectCard({ project, isActive }: ProjectCardProps) {
 
   return (
     <View style={styles.card}>
-      {/* Overlay with content */}
       <View style={styles.overlay}>
         <View style={styles.content}>
           <View style={styles.headerRow}>
             <Text style={styles.projectName}>{project.name}</Text>
             {isAIAgent && (
               <View style={styles.agentBadge}>
-                <Text style={styles.agentBadgeText}>🤖 AI Agent</Text>
+                <Text style={styles.agentBadgeText}>AI Agent</Text>
               </View>
             )}
           </View>
           <Text style={styles.projectDescription}>{project.description}</Text>
 
-          {/* Tech Stack */}
           <View style={styles.techStack}>
             {project.techs.map((tech, idx) => (
               <View key={idx} style={styles.techTag}>
@@ -59,7 +64,6 @@ export default function ProjectCard({ project, isActive }: ProjectCardProps) {
             ))}
           </View>
 
-          {/* CTA Button */}
           {primaryLink && (
             <TouchableOpacity
               style={styles.ctaButton}
@@ -67,7 +71,7 @@ export default function ProjectCard({ project, isActive }: ProjectCardProps) {
               activeOpacity={0.8}
             >
               <Text style={styles.ctaText}>
-                {project.links.website || project.links.demo ? 'Visit' : 'View on GitHub'} →
+                {project.links.website || project.links.demo ? 'Visit' : 'View on GitHub'} ->
               </Text>
             </TouchableOpacity>
           )}
@@ -105,6 +109,7 @@ const styles = StyleSheet.create({
     gap: 12
   },
   projectName: {
+    fontFamily: FONT_FAMILY,
     fontSize: 28,
     fontWeight: '700',
     color: '#FFFFFF',
@@ -120,11 +125,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   agentBadgeText: {
+    fontFamily: FONT_FAMILY,
     fontSize: 11,
     fontWeight: '700',
     color: '#000000'
   },
   projectDescription: {
+    fontFamily: FONT_FAMILY,
     fontSize: 14,
     color: '#FFFFFF',
     marginBottom: 24,
@@ -144,6 +151,7 @@ const styles = StyleSheet.create({
     marginBottom: 8
   },
   techText: {
+    fontFamily: FONT_FAMILY,
     fontSize: 11,
     fontWeight: '600',
     color: '#000000'
@@ -156,6 +164,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   ctaText: {
+    fontFamily: FONT_FAMILY,
     fontSize: 14,
     fontWeight: '700',
     color: '#000000'

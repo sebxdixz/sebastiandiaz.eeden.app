@@ -4,9 +4,9 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  FlatList,
   ActivityIndicator,
-  Linking
+  Linking,
+  Platform
 } from 'react-native';
 
 interface Repository {
@@ -22,6 +22,12 @@ interface LabCardProps {
   repo: Repository;
   delay: number;
 }
+
+const FONT_FAMILY = Platform.select({
+  ios: 'System',
+  android: 'Roboto',
+  default: 'Roboto, Arial, sans-serif',
+});
 
 function LabCard({ repo, delay }: LabCardProps) {
   const [isVisible, setIsVisible] = useState(false);
@@ -41,19 +47,19 @@ function LabCard({ repo, delay }: LabCardProps) {
       >
         <View style={styles.cardHeader}>
           <Text style={styles.repoName}>{repo.name}</Text>
-          <Text style={styles.stars}>★ {repo.stars}</Text>
+          <Text style={styles.stars}>* {repo.stars}</Text>
         </View>
-        
+
         <Text style={styles.description} numberOfLines={2}>
           {repo.description || 'No description available'}
         </Text>
-        
+
         <View style={styles.footer}>
           <Text style={styles.language}>{repo.language}</Text>
-          <Text style={styles.link}>View on GitHub →</Text>
+          <Text style={styles.link}>View on GitHub -></Text>
         </View>
       </TouchableOpacity>
-    </Animated.View>
+    </View>
   );
 }
 
@@ -62,7 +68,6 @@ export default function LabSection() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch repos from GitHub API
     fetchRepositories();
   }, []);
 
@@ -72,9 +77,9 @@ export default function LabSection() {
         'https://api.github.com/users/sebxdixz/repos?sort=stars&per_page=6'
       );
       const data = await response.json();
-      
+
       const formattedRepos: Repository[] = data.map(
-        (repo: any, idx: number) => ({
+        (repo: any) => ({
           id: repo.id.toString(),
           name: repo.name,
           description: repo.description,
@@ -83,11 +88,10 @@ export default function LabSection() {
           stars: repo.stargazers_count
         })
       );
-      
+
       setRepos(formattedRepos);
     } catch (error) {
       console.error('Failed to fetch repos:', error);
-      // Fallback data
       setRepos([
         {
           id: '1',
@@ -164,18 +168,21 @@ const styles = StyleSheet.create({
     marginBottom: 12
   },
   repoName: {
+    fontFamily: FONT_FAMILY,
     fontSize: 16,
     fontWeight: '700',
     color: '#000000',
     flex: 1
   },
   stars: {
+    fontFamily: FONT_FAMILY,
     fontSize: 12,
     fontWeight: '600',
     color: '#000000',
     marginLeft: 12
   },
   description: {
+    fontFamily: FONT_FAMILY,
     fontSize: 13,
     color: '#000000',
     lineHeight: 18,
@@ -190,11 +197,13 @@ const styles = StyleSheet.create({
     borderTopColor: '#000000'
   },
   language: {
+    fontFamily: FONT_FAMILY,
     fontSize: 11,
     fontWeight: '600',
     color: '#000000'
   },
   link: {
+    fontFamily: FONT_FAMILY,
     fontSize: 11,
     fontWeight: '600',
     color: '#000000'

@@ -5,14 +5,17 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
-  FlatList
+  Platform
 } from 'react-native';
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming
-} from 'react-native-reanimated';
-import { Project } from '../constants/projects';
+import { Project, PROJECTS } from '../constants/projects';
+
+const { width } = Dimensions.get('window');
+const itemWidth = (width - 60) / 2;
+const FONT_FAMILY = Platform.select({
+  ios: 'System',
+  android: 'Roboto',
+  default: 'Roboto, Arial, sans-serif',
+});
 
 interface ProjectGridItemProps {
   project: Project;
@@ -20,18 +23,10 @@ interface ProjectGridItemProps {
 
 function ProjectGridItem({ project }: ProjectGridItemProps) {
   const [isInverted, setIsInverted] = useState(false);
-  const rotateValue = useSharedValue(0);
 
   const handlePress = () => {
     setIsInverted(!isInverted);
-    rotateValue.value = withTiming(isInverted ? 0 : 180, {
-      duration: 600
-    });
   };
-
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ rotateY: `${rotateValue.value}deg` }]
-  }));
 
   return (
     <TouchableOpacity
@@ -39,37 +34,30 @@ function ProjectGridItem({ project }: ProjectGridItemProps) {
       style={styles.gridItemContainer}
       activeOpacity={0.8}
     >
-      <Animated.View
+      <View
         style={[
           styles.gridItem,
-          {
-            backgroundColor: isInverted ? '#000000' : '#FFFFFF'
-          },
-          animatedStyle
+          { backgroundColor: isInverted ? '#000000' : '#FFFFFF' }
         ]}
       >
-        <Text
-          style={[
-            styles.gridItemTitle,
-            { color: isInverted ? '#FFFFFF' : '#000000' }
-          ]}
-        >
-          {project.name}
-        </Text>
-        
-        {isInverted && (
+        {!isInverted ? (
+          <Text style={[styles.gridItemTitle, { color: '#000000' }]}>
+            {project.name}
+          </Text>
+        ) : (
           <View style={styles.gridItemDetails}>
+            <Text style={styles.gridItemName}>{project.name}</Text>
             <Text style={styles.gridItemDesc}>{project.description}</Text>
             <View style={styles.gridItemTechs}>
               {project.techs.slice(0, 3).map((tech, idx) => (
-                <Text key={idx} style={styles.gridItemTech}>
-                  {tech}
-                </Text>
+                <View key={idx} style={styles.techBadge}>
+                  <Text style={styles.gridItemTech}>{tech}</Text>
+                </View>
               ))}
             </View>
           </View>
         )}
-      </Animated.View>
+      </View>
     </TouchableOpacity>
   );
 }
@@ -79,61 +67,28 @@ interface ProjectsGridProps {
 }
 
 export default function ProjectsGrid({ projects = [] }: ProjectsGridProps) {
-  const gridData = projects.length > 0 ? projects : [
-    {
-      id: 'grid-1',
-      name: 'Real-time Dashboard',
-      description: 'Analytics dashboard with live data updates',
-      techs: ['React', 'D3.js', 'WebSocket'],
-      links: {}
-    },
-    {
-      id: 'grid-2',
-      name: 'Mobile App',
-      description: 'Cross-platform mobile application',
-      techs: ['React Native', 'Firebase'],
-      links: {}
-    },
-    {
-      id: 'grid-3',
-      name: 'API Gateway',
-      description: 'Microservices orchestration layer',
-      techs: ['Node.js', 'Kubernetes', 'gRPC'],
-      links: {}
-    },
-    {
-      id: 'grid-4',
-      name: 'Cloud Infrastructure',
-      description: 'Serverless deployment architecture',
-      techs: ['AWS', 'Lambda', 'CDK'],
-      links: {}
-    }
-  ];
+  const gridData: Project[] = projects.length > 0 ? projects : PROJECTS;
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={gridData}
-        renderItem={({ item }) => <ProjectGridItem project={item} />}
-        keyExtractor={(item) => item.id}
-        numColumns={2}
-        columnWrapperStyle={styles.columnWrapper}
-        scrollEnabled={false}
-      />
+      <View style={styles.grid}>
+        {gridData.map((item) => (
+          <ProjectGridItem key={item.id} project={item} />
+        ))}
+      </View>
     </View>
   );
 }
-
-const { width } = Dimensions.get('window');
-const itemWidth = (width - 60) / 2;
 
 const styles = StyleSheet.create({
   container: {
     width: '100%'
   },
-  columnWrapper: {
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'space-between',
-    marginBottom: 16
+    gap: 16
   },
   gridItemContainer: {
     width: itemWidth,
@@ -147,36 +102,52 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#000000'
+    alignItems: 'center'
   },
   gridItemTitle: {
+    fontFamily: FONT_FAMILY,
     fontSize: 16,
     fontWeight: '700',
     textAlign: 'center'
   },
   gridItemDetails: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    padding: 16,
-    justifyContent: 'center'
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  gridItemDesc: {
-    fontSize: 12,
+  gridItemName: {
+    fontFamily: FONT_FAMILY,
+    fontSize: 14,
+    fontWeight: '700',
     color: '#FFFFFF',
     marginBottom: 8,
     textAlign: 'center'
   },
+  gridItemDesc: {
+    fontFamily: FONT_FAMILY,
+    fontSize: 11,
+    color: '#FFFFFF',
+    marginBottom: 12,
+    textAlign: 'center',
+    lineHeight: 16
+  },
   gridItemTechs: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    gap: 4
+  },
+  techBadge: {
+    borderWidth: 1,
+    borderColor: '#FFFFFF',
+    borderRadius: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 2
   },
   gridItemTech: {
-    fontSize: 10,
+    fontFamily: FONT_FAMILY,
+    fontSize: 9,
     color: '#FFFFFF',
-    marginRight: 4
+    fontWeight: '600'
   }
 });

@@ -4,54 +4,62 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
-  Text
+  Text,
+  Platform
 } from 'react-native';
 import ProjectCard from './ProjectCard';
 import { PROJECTS } from '../constants/projects';
+import { TRANSLATIONS, Lang } from '../constants/translations';
 
 const { width } = Dimensions.get('window');
-const CARD_WIDTH = width * 0.9;
+const FONT_FAMILY = Platform.select({
+  ios: 'System',
+  android: 'Roboto',
+  default: 'Roboto, Arial, sans-serif',
+});
 
-export default function StackCarousel() {
+interface StackCarouselProps {
+  lang?: Lang;
+}
+
+export default function StackCarousel({ lang = 'es' }: StackCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const t = TRANSLATIONS[lang];
 
   const handlePrev = () => {
-    if (activeIndex > 0) {
-      setActiveIndex(activeIndex - 1);
-    }
+    if (activeIndex > 0) setActiveIndex(activeIndex - 1);
   };
 
   const handleNext = () => {
-    if (activeIndex < PROJECTS.length - 1) {
-      setActiveIndex(activeIndex + 1);
-    }
+    if (activeIndex < PROJECTS.length - 1) setActiveIndex(activeIndex + 1);
   };
+
+  const project = PROJECTS[activeIndex];
+  const descKey = `${project.id}-desc` as keyof typeof t;
+  const translatedDesc = t[descKey] || project.description;
 
   return (
     <View style={styles.container}>
-      {/* Project Card */}
       <View style={styles.cardContainer}>
         <ProjectCard
-          project={PROJECTS[activeIndex]}
+          project={{ ...project, description: translatedDesc }}
           isActive={true}
+          lang={lang}
         />
       </View>
 
-      {/* Navigation Controls */}
       <View style={styles.controls}>
         <TouchableOpacity
           style={[styles.button, !activeIndex && styles.buttonDisabled]}
           onPress={handlePrev}
           disabled={activeIndex === 0}
         >
-          <Text style={styles.buttonText}>← Previous</Text>
+          <Text style={styles.buttonText}>{t.previous}</Text>
         </TouchableOpacity>
 
-        <View style={styles.indicator}>
-          <Text style={styles.indicatorText}>
-            {activeIndex + 1} / {PROJECTS.length}
-          </Text>
-        </View>
+        <Text style={styles.indicatorText}>
+          {activeIndex + 1} / {PROJECTS.length}
+        </Text>
 
         <TouchableOpacity
           style={[
@@ -61,11 +69,10 @@ export default function StackCarousel() {
           onPress={handleNext}
           disabled={activeIndex === PROJECTS.length - 1}
         >
-          <Text style={styles.buttonText}>Next →</Text>
+          <Text style={styles.buttonText}>{t.next}</Text>
         </TouchableOpacity>
       </View>
 
-      {/* Dots Navigation */}
       <View style={styles.dots}>
         {PROJECTS.map((_, idx) => (
           <TouchableOpacity
@@ -81,7 +88,6 @@ export default function StackCarousel() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
@@ -111,14 +117,13 @@ const styles = StyleSheet.create({
     opacity: 0.3
   },
   buttonText: {
+    fontFamily: FONT_FAMILY,
     fontSize: 12,
     fontWeight: '700',
     color: '#000000'
   },
-  indicator: {
-    alignItems: 'center'
-  },
   indicatorText: {
+    fontFamily: FONT_FAMILY,
     fontSize: 14,
     fontWeight: '600',
     color: '#000000'

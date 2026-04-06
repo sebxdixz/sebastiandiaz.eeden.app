@@ -16,7 +16,7 @@ export const PROJECTS: Project[] = [
   {
     id: 'agon',
     name: 'Agon.cl',
-    description: 'Plataforma web completa con sistema backend robusto y diseño UI/UX minimalista. Desarrollo end-to-end: arquitectura, base de datos, APIs REST, frontend responsive y estética visual.',
+    description: 'Plataforma web completa con sistema backend robusto y diseno UI/UX minimalista. Desarrollo end-to-end: arquitectura, base de datos, APIs REST, frontend responsive y estetica visual.',
     techs: ['React', 'TypeScript', 'Node.js', 'PostgreSQL', 'CSS3', 'REST API'],
     links: {
       website: 'https://agon.cl',
@@ -26,7 +26,7 @@ export const PROJECTS: Project[] = [
   {
     id: 'aldiente',
     name: 'Al Diente App',
-    description: 'Co-creador de plataforma integral. Responsable de sistemas, backend architecture, frontend components y optimización de performance. Trabajo colaborativo en arquitectura y escalabilidad.',
+    description: 'Co-creador de plataforma integral. Responsable de sistemas, backend architecture, frontend components y optimizacion de performance. Trabajo colaborativo en arquitectura y escalabilidad.',
     techs: ['React', 'TypeScript', 'Node.js', 'MongoDB', 'Express', 'WebSocket'],
     links: {
       website: 'https://www.aldiente.app',
@@ -36,7 +36,7 @@ export const PROJECTS: Project[] = [
   {
     id: 'jober',
     name: 'JOBER',
-    description: 'Agente IA autónomo para automatización inteligente de procesos. Sistema multi-agente con capacidades de reasoning, planning y ejecución automática de tareas.',
+    description: 'Agente IA autonomo para automatizacion inteligente de procesos. Sistema multi-agente con capacidades de reasoning, planning y ejecucion automatica de tareas.',
     techs: ['Claude API', 'AI Agents', 'Python', 'TypeScript', 'Automation', 'LLM'],
     links: {
       github: 'https://github.com/sebxdixz/jober'
@@ -45,10 +45,19 @@ export const PROJECTS: Project[] = [
   {
     id: 'orthogonal',
     name: 'Orthogonal',
-    description: 'Framework de agentes IA para análisis y procesamiento de datos complejos. Sistema de reasoning avanzado con capacidades de multi-turn conversations y task decomposition.',
+    description: 'Framework de agentes IA para analisis y procesamiento de datos complejos. Sistema de reasoning avanzado con capacidades de multi-turn conversations y task decomposition.',
     techs: ['Claude API', 'AI Agents', 'Python', 'Data Processing', 'LLM', 'Reasoning'],
     links: {
       github: 'https://github.com/sebxdixz/orthogonal'
+    }
+  },
+  {
+    id: 'nation',
+    name: 'Nation',
+    description: 'Proyecto orientado a ingenieria de agentes IA, con foco en diseno de flujos autonomos, herramientas y automatizaciones para operaciones reales.',
+    techs: ['AI Agents', 'Python', 'Automation', 'Prompt Engineering', 'LLM', 'Orchestration'],
+    links: {
+      github: 'https://github.com/sebxdixz/nation'
     }
   }
 ];
