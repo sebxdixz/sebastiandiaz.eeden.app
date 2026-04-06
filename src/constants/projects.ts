@@ -14,44 +14,41 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
-    id: 'project-1',
-    name: 'Axion Framework',
-    description: 'High-performance web framework with real-time capabilities',
-    videoUrl: undefined, // Add your video URL here
-    techs: ['React', 'TypeScript', 'WebSocket', 'Node.js'],
+    id: 'agon',
+    name: 'Agon.cl',
+    description: 'Plataforma web completa con sistema backend robusto y diseño UI/UX minimalista. Desarrollo end-to-end: arquitectura, base de datos, APIs REST, frontend responsive y estética visual.',
+    techs: ['React', 'TypeScript', 'Node.js', 'PostgreSQL', 'CSS3', 'REST API'],
     links: {
-      github: 'https://github.com/sebxdixz/axion',
-      website: 'https://axion.dev'
+      website: 'https://agon.cl',
+      demo: 'https://agon.cl'
     }
   },
   {
-    id: 'project-2',
-    name: 'N1K70 Labs',
-    description: 'Experimental AI and machine learning playground',
-    videoUrl: undefined, // Add your video URL here
-    techs: ['Python', 'PyTorch', 'FastAPI', 'React'],
+    id: 'aldiente',
+    name: 'Al Diente App',
+    description: 'Co-creador de plataforma integral. Responsable de sistemas, backend architecture, frontend components y optimización de performance. Trabajo colaborativo en arquitectura y escalabilidad.',
+    techs: ['React', 'TypeScript', 'Node.js', 'MongoDB', 'Express', 'WebSocket'],
     links: {
-      github: 'https://github.com/sebxdixz/n1k70-labs'
+      website: 'https://www.aldiente.app',
+      demo: 'https://www.aldiente.app'
     }
   },
   {
-    id: 'project-3',
-    name: 'Creative Portfolio',
-    description: 'Immersive portfolio experience with advanced animations',
-    videoUrl: undefined, // Add your video URL here
-    techs: ['React Native', 'Reanimated', 'Expo', 'Web'],
+    id: 'jober',
+    name: 'JOBER',
+    description: 'Agente IA autónomo para automatización inteligente de procesos. Sistema multi-agente con capacidades de reasoning, planning y ejecución automática de tareas.',
+    techs: ['Claude API', 'AI Agents', 'Python', 'TypeScript', 'Automation', 'LLM'],
     links: {
-      website: 'https://sebastiandiaz.dev'
+      github: 'https://github.com/sebxdixz/jober'
     }
   },
   {
-    id: 'project-4',
-    name: 'Design System',
-    description: 'Comprehensive component library for modern web applications',
-    videoUrl: undefined, // Add your video URL here
-    techs: ['React', 'Styled Components', 'TypeScript', 'Storybook'],
+    id: 'orthogonal',
+    name: 'Orthogonal',
+    description: 'Framework de agentes IA para análisis y procesamiento de datos complejos. Sistema de reasoning avanzado con capacidades de multi-turn conversations y task decomposition.',
+    techs: ['Claude API', 'AI Agents', 'Python', 'Data Processing', 'LLM', 'Reasoning'],
     links: {
-      github: 'https://github.com/sebxdixz/design-system'
+      github: 'https://github.com/sebxdixz/orthogonal'
     }
   }
 ];

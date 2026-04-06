@@ -4,7 +4,8 @@ import {
   Text,
   StyleSheet,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
+  Linking
 } from 'react-native';
 import Animated, {
   useAnimatedStyle,
@@ -26,6 +27,23 @@ export default function ProjectCard({ project, isActive }: ProjectCardProps) {
   const videoRef = React.useRef<Video>(null);
   const [isMuted] = useState(true);
   const scaleValue = useSharedValue(1);
+
+  const isAIAgent = project.techs.some(tech =>
+    tech.toLowerCase().includes('ai') ||
+    tech.toLowerCase().includes('agent') ||
+    tech.toLowerCase().includes('claude')
+  );
+
+  const primaryLink =
+    project.links.website ||
+    project.links.demo ||
+    project.links.github;
+
+  const handleViewProject = () => {
+    if (primaryLink) {
+      Linking.openURL(primaryLink);
+    }
+  };
 
   React.useEffect(() => {
     if (isActive) {
@@ -63,7 +81,14 @@ export default function ProjectCard({ project, isActive }: ProjectCardProps) {
       {/* Overlay with content */}
       <View style={styles.overlay}>
         <View style={styles.content}>
-          <Text style={styles.projectName}>{project.name}</Text>
+          <View style={styles.headerRow}>
+            <Text style={styles.projectName}>{project.name}</Text>
+            {isAIAgent && (
+              <View style={styles.agentBadge}>
+                <Text style={styles.agentBadgeText}>🤖 AI Agent</Text>
+              </View>
+            )}
+          </View>
           <Text style={styles.projectDescription}>{project.description}</Text>
 
           {/* Tech Stack */}
@@ -76,9 +101,17 @@ export default function ProjectCard({ project, isActive }: ProjectCardProps) {
           </View>
 
           {/* CTA Button */}
-          <TouchableOpacity style={styles.ctaButton}>
-            <Text style={styles.ctaText}>View Project</Text>
-          </TouchableOpacity>
+          {primaryLink && (
+            <TouchableOpacity
+              style={styles.ctaButton}
+              onPress={handleViewProject}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.ctaText}>
+                {project.links.website || project.links.demo ? 'Visit' : 'View on GitHub'} →
+              </Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </Animated.View>
@@ -110,11 +143,32 @@ const styles = StyleSheet.create({
   content: {
     width: '100%'
   },
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginBottom: 12,
+    gap: 12
+  },
   projectName: {
     fontSize: 28,
     fontWeight: '700',
     color: '#FFFFFF',
-    marginBottom: 12
+    flex: 1
+  },
+  agentBadge: {
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 20,
+    minWidth: 90,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  agentBadgeText: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#000000'
   },
   projectDescription: {
     fontSize: 14,
