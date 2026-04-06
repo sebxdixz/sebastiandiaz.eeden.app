@@ -1,0 +1,19 @@
+{
+  "buildCommand": "expo export --platform web",
+  "outputDirectory": "dist",
+  "framework": "expo",
+  "env": {
+    "EXPO_NO_DOTENV": "1"
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, immutable"
+        }
+      ]
+    }
+  ]
+}
