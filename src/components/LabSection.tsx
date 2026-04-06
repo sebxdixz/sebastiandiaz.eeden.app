@@ -26,7 +26,7 @@ interface LabCardProps {
 const FONT_FAMILY = Platform.select({
   ios: 'System',
   android: 'Roboto',
-  default: 'Roboto, Arial, sans-serif',
+  default: 'Roboto',
 });
 
 function LabCard({ repo, delay }: LabCardProps) {

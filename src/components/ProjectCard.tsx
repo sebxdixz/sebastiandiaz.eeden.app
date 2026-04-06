@@ -15,7 +15,7 @@ const CARD_WIDTH = width * 0.9;
 const FONT_FAMILY = Platform.select({
   ios: 'System',
   android: 'Roboto',
-  default: 'Roboto, Arial, sans-serif',
+  default: 'Roboto',
 });
 
 interface ProjectCardProps {

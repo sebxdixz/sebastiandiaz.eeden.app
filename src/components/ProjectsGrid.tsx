@@ -14,7 +14,7 @@ const itemWidth = (width - 60) / 2;
 const FONT_FAMILY = Platform.select({
   ios: 'System',
   android: 'Roboto',
-  default: 'Roboto, Arial, sans-serif',
+  default: 'Roboto',
 });
 
 interface ProjectGridItemProps {
