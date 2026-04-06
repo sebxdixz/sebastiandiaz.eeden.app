@@ -39,13 +39,13 @@ export const PROFILE_META = {
 export const RESUME_CONTENT: Record<Lang, ResumeContent> = {
   es: {
     coreSkills: [
-      'Sistemas Multi-Agente con LangGraph',
-      'Orquestacion de LLMs',
-      'Structured Output con Pydantic',
-      'Pipelines de Evaluacion con RAGAS',
-      'Python y APIs RESTful',
+      'LangGraph Multi-Agent Systems',
+      'LLM Orchestration',
+      'Structured Output with Pydantic',
+      'RAGAS Evaluation Pipelines',
+      'Python and RESTful APIs',
       'ETL/ELT para Retail',
-      'Docker y Kubernetes',
+      'Docker and Kubernetes',
     ],
     education: [
       {
@@ -62,7 +62,7 @@ export const RESUME_CONTENT: Record<Lang, ResumeContent> = {
     experience: [
       {
         company: 'Grupo Axo',
-        role: 'Data Scientist y Automation Analyst',
+        role: 'Data Scientist & Automation Analyst',
         period: 'Enero 2025 - Presente',
         highlights: [
           'Lidero arquitectura de pipelines de datos autonomos para retail internacional, reemplazando analisis manual por decisiones automatizadas.',
@@ -76,9 +76,9 @@ export const RESUME_CONTENT: Record<Lang, ResumeContent> = {
         period: 'Diciembre 2025 - Presente',
         highlights: [
           'Disene un sistema multi-agente persistente con LangGraph y PostgreSQL para auditorias forenses de facturacion (3-way match).',
-          'Implemente Structured Output con Pydantic en modelos LLM, reduciendo la alucinacion en OCR a menos de 1% en produccion.',
+          'Implemente Structured Output with Pydantic en modelos LLM, reduciendo la alucinacion en OCR a menos de 1% en produccion.',
           'Desarrolle Headhunter CLI, un agente autonomo de ventas para prospeccion dinamica y redaccion contextual.',
-          'Desplegue infraestructura de inferencia contenerizada con Docker, preparada para Kubernetes.',
+          'Desplegue infraestructura de inferencia containerizada con Docker, preparada para Kubernetes.',
         ],
       },
       {
@@ -195,13 +195,13 @@ export const RESUME_CONTENT: Record<Lang, ResumeContent> = {
   },
   de: {
     coreSkills: [
-      'LangGraph Multi-Agent-Systeme',
-      'LLM-Orchestrierung',
-      'Structured Output mit Pydantic',
-      'RAGAS Evaluations-Pipelines',
-      'Python und RESTful APIs',
+      'LangGraph Multi-Agent Systems',
+      'LLM Orchestration',
+      'Structured Output with Pydantic',
+      'RAGAS Evaluation Pipelines',
+      'Python and RESTful APIs',
       'ETL/ELT fuer Retail',
-      'Docker und Kubernetes',
+      'Docker and Kubernetes',
     ],
     education: [
       {
@@ -218,7 +218,7 @@ export const RESUME_CONTENT: Record<Lang, ResumeContent> = {
     experience: [
       {
         company: 'Grupo Axo',
-        role: 'Data Scientist und Automation Analyst',
+        role: 'Data Scientist & Automation Analyst',
         period: 'Januar 2025 - Heute',
         highlights: [
           'Leite die Architektur autonomer Datenpipelines fuer internationalen Retail und ersetze manuelle Analyse durch automatisierte Entscheidungsablaeufe.',

@@ -93,7 +93,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    paddingBottom: 22
+    paddingBottom: 22,
+    backgroundColor: '#000000'
   },
   cardContainer: {
     alignItems: 'center',
@@ -117,9 +118,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 10,
     borderWidth: 1.5,
-    borderColor: '#000000',
+    borderColor: '#F2F2F2',
     borderRadius: 0,
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#0A0A0A',
+    shadowColor: '#000000',
+    shadowOpacity: 0.4,
+    shadowRadius: 0,
+    shadowOffset: { width: 3, height: 3 },
+    elevation: 2
   },
   buttonCompact: {
     minWidth: 120,
@@ -132,13 +138,13 @@ const styles = StyleSheet.create({
     fontFamily: FONT_FAMILY,
     fontSize: 12,
     fontWeight: '700',
-    color: '#000000'
+    color: '#F2F2F2'
   },
   indicatorText: {
     fontFamily: FONT_FAMILY,
     fontSize: 14,
     fontWeight: '700',
-    color: '#000000'
+    color: '#F2F2F2'
   },
   indicatorCompact: {
     width: '100%',
@@ -154,12 +160,12 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: '#CCCCCC',
+    backgroundColor: '#1C1C1C',
     borderWidth: 1,
-    borderColor: '#000000'
+    borderColor: '#F2F2F2'
   },
   dotActive: {
-    backgroundColor: '#000000',
+    backgroundColor: '#F2F2F2',
     width: 10,
     height: 10,
     borderRadius: 5
