@@ -17,11 +17,8 @@
     },
     "web": {
       "bundler": "metro",
-      "favicon": "./assets/favicon.png",
       "output": "dist"
     },
-    "plugins": [
-      "react-native-reanimated/plugin"
-    ]
+    "plugins": []
   }
 }

@@ -8,12 +8,6 @@ import {
   ActivityIndicator,
   Linking
 } from 'react-native';
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-  Easing
-} from 'react-native-reanimated';
 
 interface Repository {
   id: string;
@@ -30,29 +24,17 @@ interface LabCardProps {
 }
 
 function LabCard({ repo, delay }: LabCardProps) {
-  const offsetY = useSharedValue(30);
-  const opacity = useSharedValue(0);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    offsetY.value = withTiming(0, {
-      duration: 600,
-      easing: Easing.out(Easing.cubic),
-      delay: delay
-    });
-    opacity.value = withTiming(1, {
-      duration: 600,
-      easing: Easing.ease,
-      delay: delay
-    });
-  }, []);
-
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ translateY: offsetY.value }],
-    opacity: opacity.value
-  }));
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, delay);
+    return () => clearTimeout(timer);
+  }, [delay]);
 
   return (
-    <Animated.View style={[styles.card, animatedStyle]}>
+    <View style={[styles.card, { opacity: isVisible ? 1 : 0 }]}>
       <TouchableOpacity
         onPress={() => Linking.openURL(repo.url)}
         activeOpacity={0.8}
