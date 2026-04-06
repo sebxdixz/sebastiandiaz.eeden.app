@@ -8,6 +8,7 @@ import {
   Linking,
   Platform
 } from 'react-native';
+import { Lang, TRANSLATIONS } from '../constants/translations';
 
 interface Repository {
   id: string;
@@ -21,6 +22,8 @@ interface Repository {
 interface LabCardProps {
   repo: Repository;
   delay: number;
+  noDescriptionText: string;
+  viewOnGithubText: string;
 }
 
 const FONT_FAMILY = Platform.select({
@@ -29,7 +32,12 @@ const FONT_FAMILY = Platform.select({
   default: 'Roboto',
 });
 
-function LabCard({ repo, delay }: LabCardProps) {
+function LabCard({
+  repo,
+  delay,
+  noDescriptionText,
+  viewOnGithubText,
+}: LabCardProps) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -51,21 +59,109 @@ function LabCard({ repo, delay }: LabCardProps) {
         </View>
 
         <Text style={styles.description} numberOfLines={2}>
-          {repo.description || 'No description available'}
+          {repo.description || noDescriptionText}
         </Text>
 
         <View style={styles.footer}>
           <Text style={styles.language}>{repo.language}</Text>
-          <Text style={styles.link}>View on GitHub -></Text>
+          <Text style={styles.link}>{viewOnGithubText}</Text>
         </View>
       </TouchableOpacity>
     </View>
   );
 }
 
-export default function LabSection() {
+function getFallbackRepos(lang: Lang): Repository[] {
+  if (lang === 'de') {
+    return [
+      {
+        id: '1',
+        name: 'N1K70',
+        description: 'KI-Experimente und Machine-Learning Playground',
+        url: 'https://github.com/sebxdixz/n1k70',
+        language: 'Python',
+        stars: 42
+      },
+      {
+        id: '2',
+        name: 'Axion',
+        description: 'Modernes Web-Framework',
+        url: 'https://github.com/sebxdixz/axion',
+        language: 'TypeScript',
+        stars: 28
+      },
+      {
+        id: '3',
+        name: 'Creative Dev Tools',
+        description: 'Sammlung von Developer-Utilities',
+        url: 'https://github.com/sebxdixz/creative-dev-tools',
+        language: 'JavaScript',
+        stars: 15
+      }
+    ];
+  }
+
+  if (lang === 'en') {
+    return [
+      {
+        id: '1',
+        name: 'N1K70',
+        description: 'AI experiments and machine learning playground',
+        url: 'https://github.com/sebxdixz/n1k70',
+        language: 'Python',
+        stars: 42
+      },
+      {
+        id: '2',
+        name: 'Axion',
+        description: 'Modern web framework',
+        url: 'https://github.com/sebxdixz/axion',
+        language: 'TypeScript',
+        stars: 28
+      },
+      {
+        id: '3',
+        name: 'Creative Dev Tools',
+        description: 'Collection of developer utilities',
+        url: 'https://github.com/sebxdixz/creative-dev-tools',
+        language: 'JavaScript',
+        stars: 15
+      }
+    ];
+  }
+
+  return [
+    {
+      id: '1',
+      name: 'N1K70',
+      description: 'Experimentos de IA y laboratorio de machine learning',
+      url: 'https://github.com/sebxdixz/n1k70',
+      language: 'Python',
+      stars: 42
+    },
+    {
+      id: '2',
+      name: 'Axion',
+      description: 'Framework web moderno',
+      url: 'https://github.com/sebxdixz/axion',
+      language: 'TypeScript',
+      stars: 28
+    },
+    {
+      id: '3',
+      name: 'Creative Dev Tools',
+      description: 'Coleccion de utilidades para desarrolladores',
+      url: 'https://github.com/sebxdixz/creative-dev-tools',
+      language: 'JavaScript',
+      stars: 15
+    }
+  ];
+}
+
+export default function LabSection({ lang = 'es' }: { lang?: Lang }) {
   const [repos, setRepos] = useState<Repository[]>([]);
   const [loading, setLoading] = useState(true);
+  const t = TRANSLATIONS[lang];
 
   useEffect(() => {
     fetchRepositories();
@@ -91,39 +187,14 @@ export default function LabSection() {
         name: repo.name,
         description: repo.description,
         url: repo.html_url,
-        language: repo.language || 'Unknown',
+        language: repo.language || t.unknownLanguage,
         stars: repo.stargazers_count
       }));
 
       setRepos(formattedRepos);
     } catch (error) {
       console.error('Failed to fetch repos:', error);
-      setRepos([
-        {
-          id: '1',
-          name: 'N1K70',
-          description: 'AI experiments and machine learning playground',
-          url: 'https://github.com/sebxdixz/n1k70',
-          language: 'Python',
-          stars: 42
-        },
-        {
-          id: '2',
-          name: 'Axion',
-          description: 'Modern web framework',
-          url: 'https://github.com/sebxdixz/axion',
-          language: 'TypeScript',
-          stars: 28
-        },
-        {
-          id: '3',
-          name: 'Creative Dev Tools',
-          description: 'Collection of developer utilities',
-          url: 'https://github.com/sebxdixz/creative-dev-tools',
-          language: 'JavaScript',
-          stars: 15
-        }
-      ]);
+      setRepos(getFallbackRepos(lang));
     } finally {
       setLoading(false);
     }
@@ -144,6 +215,8 @@ export default function LabSection() {
           key={repo.id}
           repo={repo}
           delay={idx * 100}
+          noDescriptionText={t.noDescription}
+          viewOnGithubText={t.viewOnGithub}
         />
       ))}
     </View>

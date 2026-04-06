@@ -9,6 +9,7 @@ import {
   useWindowDimensions
 } from 'react-native';
 import { Project } from '../constants/projects';
+import { Lang, TRANSLATIONS } from '../constants/translations';
 
 const FONT_FAMILY = Platform.select({
   ios: 'System',
@@ -19,12 +20,13 @@ const FONT_FAMILY = Platform.select({
 interface ProjectCardProps {
   project: Project;
   isActive: boolean;
-  lang?: 'es' | 'en' | 'de';
+  lang?: Lang;
 }
 
-export default function ProjectCard({ project }: ProjectCardProps) {
+export default function ProjectCard({ project, lang = 'es' }: ProjectCardProps) {
   const { width } = useWindowDimensions();
   const cardWidth = Math.min(Math.max(width - 70, 280), 980);
+  const t = TRANSLATIONS[lang];
 
   const isAIAgent = project.techs.some((tech) =>
     tech.toLowerCase().includes('ai') ||
@@ -51,7 +53,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             <Text style={styles.projectName}>{project.name}</Text>
             {isAIAgent && (
               <View style={styles.agentBadge}>
-                <Text style={styles.agentBadgeText}>AI Agent</Text>
+                <Text style={styles.agentBadgeText}>{t.aiAgent}</Text>
               </View>
             )}
           </View>
@@ -72,7 +74,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
               activeOpacity={0.8}
             >
               <Text style={styles.ctaText}>
-                {project.links.website || project.links.demo ? 'Visit' : 'View on GitHub'} ->
+                {project.links.website || project.links.demo ? t.visit : t.viewOnGithub}
               </Text>
             </TouchableOpacity>
           )}

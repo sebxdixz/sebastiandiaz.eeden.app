@@ -13,13 +13,7 @@ import ProjectsGrid from '../src/components/ProjectsGrid';
 import LabSection from '../src/components/LabSection';
 import { TRANSLATIONS, Lang } from '../src/constants/translations';
 import { PROJECTS } from '../src/constants/projects';
-import {
-  PROFILE_META,
-  CORE_SKILLS,
-  EDUCATION,
-  EXPERIENCE,
-  CERTIFICATIONS,
-} from '../src/constants/resume';
+import { PROFILE_META, RESUME_CONTENT } from '../src/constants/resume';
 
 const SOCIAL_LINKS = {
   linkedin: 'https://www.linkedin.com/in/sebastiandiazti/',
@@ -47,6 +41,12 @@ function Bullet({ text }: { text: string }) {
 export default function HomeScreen() {
   const [lang, setLang] = useState<Lang>('es');
   const t = TRANSLATIONS[lang];
+  const resume = RESUME_CONTENT[lang];
+
+  const localizedProjects = PROJECTS.map((project) => {
+    const descKey = `${project.id}-desc` as keyof typeof t;
+    return { ...project, description: t[descKey] || project.description };
+  });
 
   const openLink = (url: string) => Linking.openURL(url);
   const openEmail = () => Linking.openURL(`mailto:${SOCIAL_LINKS.email}`);
@@ -73,7 +73,7 @@ export default function HomeScreen() {
         </View>
 
         <View style={styles.hero}>
-          <Text style={styles.kicker}>AI AGENT ENGINEER · SANTIAGO</Text>
+          <Text style={styles.kicker}>{t.heroKicker}</Text>
           <Text style={styles.name}>Sebastian Diaz</Text>
           <Text style={styles.role}>{t.role}</Text>
           <Text style={styles.bio}>{t.bio}</Text>
@@ -86,7 +86,7 @@ export default function HomeScreen() {
           </View>
 
           <View style={styles.skillsRow}>
-            {CORE_SKILLS.map((skill) => (
+            {resume.coreSkills.map((skill) => (
               <View key={skill} style={styles.skillChip}>
                 <Text style={styles.skillChipText}>{skill}</Text>
               </View>
@@ -124,15 +124,15 @@ export default function HomeScreen() {
         <View style={styles.separator} />
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Selected Work</Text>
-          <ProjectsGrid projects={PROJECTS} />
+          <Text style={styles.sectionTitle}>{t.selectedWork}</Text>
+          <ProjectsGrid projects={localizedProjects} />
         </View>
 
         <View style={styles.separator} />
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t.workExperience}</Text>
-          {EXPERIENCE.map((item) => (
+          {resume.experience.map((item) => (
             <View key={`${item.company}-${item.role}`} style={styles.resumeBlock}>
               <View style={styles.resumeHead}>
                 <View style={styles.resumeHeadMain}>
@@ -157,7 +157,7 @@ export default function HomeScreen() {
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t.education}</Text>
-          {EDUCATION.map((item) => (
+          {resume.education.map((item) => (
             <View key={item.institution} style={styles.resumeBlock}>
               <View style={styles.resumeHead}>
                 <View style={styles.resumeHeadMain}>
@@ -181,7 +181,7 @@ export default function HomeScreen() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t.certifications}</Text>
           <View style={styles.resumeBlock}>
-            {CERTIFICATIONS.map((cert, index) => (
+            {resume.certifications.map((cert, index) => (
               <View
                 key={`${cert.provider}-${cert.name}`}
                 style={[styles.certRow, index > 0 && styles.certRowBorder]}
@@ -200,7 +200,7 @@ export default function HomeScreen() {
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t.theLab}</Text>
-          <LabSection />
+          <LabSection lang={lang} />
         </View>
 
         <View style={styles.footer}>
